@@ -17,7 +17,7 @@ class Channel extends React.Component {
     }
 }
 
-// List of Channels
+// List of channels
 class ChannelList extends React.Component {
     render() {
         return (
@@ -34,8 +34,31 @@ class ChannelList extends React.Component {
     }
 }
 
+// From to create new channels
+class ChannelForm extends React.Component {
+    render() {
+        return (
+            <form>
+                <input type="text"/>
+            </form>
+        )
+    }
+}
+
+// Component to store Channel list and Form to create new channels
+class ChannelSection extends React.Component {
+    render() {
+        return (
+            <div>
+                <ChannelList channels={channels}/>
+                <ChannelForm/>
+            </div>
+        )
+    }
+}
+
 // Display content
 ReactDOM.render(
-    <ChannelList channels={channels}/>,
+    <ChannelSection/>,
     document.getElementById('app')
 );
