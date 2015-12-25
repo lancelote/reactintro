@@ -1,9 +1,3 @@
-// Array of available channels
-let channels = [
-    {name: "Hardware Support"},
-    {name: "Software Support"}
-];
-
 // Single channel
 class Channel extends React.Component {
     onClick() {
@@ -54,15 +48,13 @@ class ChannelForm extends React.Component {
         let {channelName} = this.state;
         console.log(channelName);
 
-        // Adds new channel to the channel list array
-        channels.push(
-            {name: channelName}
-        );
-
         // Clear input field after submit
         this.setState(
             {channelName: ''}
         );
+
+        // Adds new channel to the channel list array
+        this.props.addChannel(channelName);
 
         // Prevent browser to submit form via HTTP
         event.preventDefault();
@@ -81,11 +73,29 @@ class ChannelForm extends React.Component {
 
 // Component to store Channel list and Form to create new channels
 class ChannelSection extends React.Component {
+    constructor(props) {
+        super(props);
+        // Array of available channels
+        this.state = {
+            channels: [
+                {name: "Hardware Support"},
+                {name: "Software Support"}
+            ]
+        };
+    }
+
+    // Helper function to update channel list
+    addChannel(name) {
+        let {channels} = this.state;
+        channels.push({name: name});
+        this.setState({channels: channels});
+    }
+
     render() {
         return (
             <div>
-                <ChannelList channels={channels}/>
-                <ChannelForm/>
+                <ChannelList channels={this.state.channels}/>
+                <ChannelForm addChannel={this.addChannel.bind(this)}/>
             </div>
         )
     }
