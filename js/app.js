@@ -36,10 +36,44 @@ class ChannelList extends React.Component {
 
 // From to create new channels
 class ChannelForm extends React.Component {
+    // Initialize state to prevent error at first load
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    // Save the state of the input field
+    onChange(event) {
+        this.setState(
+            {channelName: event.target.value}
+        );
+    }
+
+    // Adds new channel to the list
+    onSubmit(event) {
+        let {channelName} = this.state;
+        console.log(channelName);
+
+        // Adds new channel to the channel list array
+        channels.push(
+            {name: channelName}
+        );
+
+        // Clear input field after submit
+        this.setState(
+            {channelName: ''}
+        );
+
+        // Prevent browser to submit form via HTTP
+        event.preventDefault();
+    }
+
     render() {
         return (
-            <form>
-                <input type="text"/>
+            <form onSubmit={this.onSubmit.bind(this)}>
+                <input type="text"
+                       onChange={this.onChange.bind(this)}
+                       value={this.state.channelName}/>
             </form>
         )
     }
